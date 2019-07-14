@@ -3,47 +3,30 @@ import 'package:flutter/widgets.dart';
 
 import 'package:wordbase_io/models/language.dart';
 
-class LanguagePicker extends StatefulWidget {
+class LanguagePicker extends StatelessWidget {
   const LanguagePicker({
     Key key,
-    this.defaultLanguage,
-    this.availableLanguages
+    this.language,
+    this.availableLanguages,
+    this.languagePicked,
   }) : super(key: key);
 
-  final Language defaultLanguage;
+  final Language language;
   final List<Language> availableLanguages;
-
-  @override
-  _LanguagePickerState createState() {
-    if (this.availableLanguages.contains(this.defaultLanguage)) {
-      return _LanguagePickerState(this.defaultLanguage);
-    } else {
-      return _LanguagePickerState(this.availableLanguages[0]);
-    }
-  }
-}
-
-class _LanguagePickerState extends State<LanguagePicker> {
-  Language selectedLanguage;
-
-  _LanguagePickerState(Language language) {
-    this.selectedLanguage = language;
-  }
+  final Function languagePicked;
 
   @override
   Widget build(BuildContext context) {
     return DropdownButton<Language>(
-      value: selectedLanguage,
+      value: language,
       onChanged: (Language newLanguage) {
-        setState(() {
-          selectedLanguage = newLanguage;
-        });
+        this.languagePicked(newLanguage);
       },
-      items: this.widget.availableLanguages
+      items: this.availableLanguages
         .map<DropdownMenuItem<Language>>((Language value) {
           return DropdownMenuItem<Language>(
             value: value,
-            child: Text(value.name)
+            child: Text(value.description)
           );
         })
         .toList(),
