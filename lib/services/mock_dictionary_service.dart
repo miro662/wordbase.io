@@ -20,5 +20,6 @@ class MockDictionaryService implements DictionaryService {
   Future<List<String>> translate(String word, LanguagePair fromTo) async => <String>[
     "${word}_${fromTo.from.code}_${fromTo.to.code}_1",
     "${word}_${fromTo.from.code}_${fromTo.to.code}_2",
+    "${word}_${fromTo.from.code}_${fromTo.to.code}_3",
   ];
 }

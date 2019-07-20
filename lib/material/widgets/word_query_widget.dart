@@ -23,9 +23,7 @@ class _WordQueryWidgetState extends State<WordQueryWidget> {
   LanguagePair languagePair;
 
   void checkQuery() {
-    if (wordToTranslate != "") {
-      this.widget?.onRequestChange(wordToTranslate, languagePair);
-    }
+    this.widget?.onRequestChange(wordToTranslate, languagePair);
   }
 
   @override
@@ -36,6 +34,7 @@ class _WordQueryWidgetState extends State<WordQueryWidget> {
       child: Column(
         children: <Widget>[
           TextField(
+            autocorrect: false,
             decoration: InputDecoration(
               hintText: 'Enter word to translate'
             ),
@@ -48,7 +47,8 @@ class _WordQueryWidgetState extends State<WordQueryWidget> {
           FutureBuilder<Set<LanguagePair>>(
             future: widget.dictionaryService.getAvailableLanguagePairs(),
             builder: (context, snapshot) {
-              if (snapshot.data != null) { 
+              if (snapshot.data != null) {
+                languagePair = snapshot.data.first;
                 return LanguagePairPicker(
                   languagePairs: snapshot.data,
                   onPairChanged: (newPair) {
